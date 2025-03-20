@@ -1,0 +1,57 @@
+<app-floating-configurator />
+<div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
+    <div class="grid grid-cols-2 w-screen h-screen">
+        <div class="form-login-column bg-transparent w-full h-full">
+            <div class="form-login-container w-full h-full p-40 flex justify-center items-center">
+                <div class="w-full card bg-orange-700!">
+                    <div class="w-full mb-8">
+                        <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Inicio de Sesión</div>
+                        <span class="text-muted-color font-medium">Sign in to continue</span>
+                    </div>
+                    <div>
+                        <label 
+                            for="email1" 
+                            class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">
+                            Usuario
+                        </label>
+                        <input 
+                            pInputText 
+                            id="email1" 
+                            type="text" 
+                            placeholder="Email address" 
+                            class="w-full md:w-[30.2rem] mb-8" 
+                            [(ngModel)]="username"
+                        />
+                        
+                        <label 
+                            for="password1" 
+                            class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">
+                            Password
+                        </label>
+                        <p-password 
+                            id="password1" 
+                            [(ngModel)]="password" 
+                            placeholder="Password" 
+                            [toggleMask]="true" 
+                            styleClass="mb-8" 
+                            [fluid]="true" 
+                            [feedback]="false"
+                        />
+                        <div class="flex items-center justify-between mt-2 mb-8 gap-8">
+                            <div class="flex items-center">
+                                <p-checkbox [(ngModel)]="checked" id="rememberme1" binary class="mr-2"></p-checkbox>
+                                <label for="rememberme1">Remember me</label>
+                            </div>
+                        </div>
+                        <p-button label="Sign In" styleClass="w-full" routerLink="/"></p-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="landing-image-column w-full h-full p-8">
+            <div class="landing-image-container w-full h-full bg-red-400 rounded-xl">
+                
+            </div>
+        </div>
+    </div>
+</div>
