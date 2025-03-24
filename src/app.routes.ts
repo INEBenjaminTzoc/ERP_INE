@@ -4,10 +4,15 @@ import { Dashboard } from './app/pages/dashboard/dashboard';
 import { Documentation } from './app/pages/documentation/documentation';
 import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
+import { LoginComponent } from './app/pages/auth/login/login.component';
 
 export const appRoutes: Routes = [
     {
-        path: 'admin',
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: '',
         component: AppLayout,
         children: [
             { path: '', component: Dashboard },
@@ -18,6 +23,6 @@ export const appRoutes: Routes = [
     },
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
-    { path: '', loadChildren: () => import('./app/pages/auth/auth.routes') },
+    { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
     { path: '**', redirectTo: '/notfound' }
 ];

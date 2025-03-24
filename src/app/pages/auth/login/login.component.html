@@ -1,12 +1,17 @@
 <app-floating-configurator />
 <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
-    <div class="grid grid-cols-2 w-screen h-screen">
-        <div class="form-login-column bg-transparent w-full h-full">
-            <div class="form-login-container w-full h-full p-40 flex justify-center items-center">
-                <div class="w-full card bg-orange-700!">
-                    <div class="w-full mb-8">
-                        <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Inicio de Sesión</div>
-                        <span class="text-muted-color font-medium">Sign in to continue</span>
+    <div class="grid grid-cols-1 lg:grid-cols-2 w-screen h-screen">
+        <div class="form-login-column bg-transparent w-full h-full flex flex-col">
+            <div class="form-login-container w-full flex-1 flex justify-center items-center px-8 md:px-28">
+                <div class="w-full card">
+                    <div class="w-full mb-8 flex flex-col sm:flex-row items-center">
+                        <div class="aspect-square w-24 md:w-36">
+                            <img src="img/INE.png" class="mb-6 sm:mb-0 sm:me-6 aspect-square" alt="INE_Logo">
+                        </div>
+                        <div class="w-full text-center">
+                            <div class="text-surface-900 dark:text-surface-0 text-3xl font-bold mb-4">Inicio de Sesión</div>
+                            <span class="text-muted-color font-medium">Bienvenido al Sistema ERP del Instituto Nacional de Estadística</span>
+                        </div>
                     </div>
                     <div>
                         <label 
@@ -18,7 +23,7 @@
                             pInputText 
                             id="email1" 
                             type="text" 
-                            placeholder="Email address" 
+                            placeholder="Ingresa tu usuario" 
                             class="w-full mb-8" 
                             [(ngModel)]="username"
                         />
@@ -31,7 +36,7 @@
                         <p-password 
                             id="password1" 
                             [(ngModel)]="password" 
-                            placeholder="Password" 
+                            placeholder="Ingresa al menos 8 caracteres" 
                             [toggleMask]="true" 
                             styleClass="mb-8" 
                             [fluid]="true" 
@@ -47,9 +52,20 @@
                     </div>
                 </div>
             </div>
+            <div class="w-full text-center py-4">
+                © Instituto Nacional de Estadística
+                <a 
+                    href="https://primeng.org" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="text-primary font-bold hover:underline">
+                    Guatemala
+                </a>
+            </div>
         </div>
-        <div class="landing-image-column w-full h-full p-8">
-            <div class="landing-image-container w-full h-full bg-red-400 rounded-xl">
+        <div class="landing-image-column w-full h-full p-8 hidden lg:block">
+            <div class="landing-image-container w-full h-full rounded-xl overflow-hidden">
+                <!-- <img src="img/unsplash1.jpg" alt=""> -->
             </div>
         </div>
     </div>
