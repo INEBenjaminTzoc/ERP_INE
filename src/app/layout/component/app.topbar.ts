@@ -8,11 +8,13 @@ import { LayoutService } from '../service/layout.service';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { MenuModule } from 'primeng/menu';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
     selector: 'app-topbar',
     standalone: true,
-    imports: [RouterModule, CommonModule, StyleClassModule, AppConfigurator, PopoverModule, TieredMenuModule],
+    imports: [RouterModule, CommonModule, StyleClassModule, AppConfigurator, PopoverModule, TieredMenuModule, MenuModule, AvatarModule],
     template: ` <div class="layout-topbar">
         <div class="layout-topbar-logo-container">
             <button class="layout-menu-button layout-topbar-action" (click)="layoutService.onMenuToggle()">
@@ -61,13 +63,30 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
                         <i class="pi pi-inbox"></i>
                         <span>Messages</span>
                     </button>
-                    <button type="button" class="layout-topbar-action" (click)="togglePopup(popupUserOption, $event)">
+                    <button type="button" class="layout-topbar-action" (click)="menu.toggle($event)">
                         <i class="pi pi-user"></i>
                         <span>Profile</span>
                     </button>
-                    <p-popover #popupUserOption id="overlay_panel" [style]="{ width: '250px' }">
-                        <p-tieredmenu class="border-0" [model]="userMenuItems"></p-tieredmenu>
-                    </p-popover>
+                    <p-menu #menu [model]="userMenuItems" [popup]="true" class="flex justify-center" styleClass="w-full md:w-60">
+                        <ng-template #submenuheader let-item>
+                            <span class="text-primary font-bold">{{ item.label }}</span>
+                        </ng-template>
+                        <ng-template #item let-item>
+                            <a pRipple class="flex items-center p-menu-item-link">
+                                <span [class]="item.icon"></span>
+                                <span class="ml-2">{{ item.label }}</span>
+                            </a>
+                        </ng-template>
+                        <ng-template #end>
+                            <button pRipple class="relative overflow-hidden w-full border-0 bg-transparent flex items-start p-2 pl-4 hover:bg-surface-100 dark:hover:bg-surface-800 rounded-none cursor-pointer transition-colors duration-200">
+                                <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" class="mr-2" shape="circle" />
+                                <span class="inline-flex flex-col">
+                                    <span class="font-bold">Amy Elsner</span>
+                                    <span class="text-sm text-start">Admin</span>
+                                </span>
+                            </button>
+                        </ng-template>
+                    </p-menu>
                 </div>
             </div>
         </div>

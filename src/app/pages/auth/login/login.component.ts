@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AppFloatingConfigurator } from "../../../layout/component/app.floatingconfigurator";
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { Router, RouterModule } from '@angular/router';
@@ -9,16 +9,18 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
 import { ILoginPayload } from '../../../interfaces/login.interface';
 import { AuthService } from '../../../services/auth.service';
+import { toast } from 'ngx-sonner';
 
 const modules = [
   AppFloatingConfigurator, 
   FormsModule, 
+  ReactiveFormsModule,
   PasswordModule, 
   ButtonModule, 
   InputTextModule, 
   CheckboxModule,
   RouterModule,
-  RippleModule
+  RippleModule,
 ]
 
 @Component({
@@ -29,22 +31,20 @@ const modules = [
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  username: string = '';
-  password: string = '';
-  checked: boolean = false;
+  formLogin: FormGroup;
+  protected readonly toast = toast;
 
   constructor (
     private authService: AuthService,
     private router: Router,
-    private formBuild: FormBuilder
+    private fb: FormBuilder,
   ) {
-    this.formLogin = formBuild.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+    this.formLogin = this.fb.group({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
     })
   }
 
-  formLogin: FormGroup;
 
   onLogin(): void {
     if (this.formLogin.invalid) {
@@ -54,17 +54,27 @@ export class LoginComponent {
 
     //SE INICIALIZA UN OBJETO CON LOS DATOS DEL USUARIO
     const loginPayload: ILoginPayload = {
-      username: this.username,
-      password: this.password,
+      username: this.formLogin.get('username')?.value,
+      password: this.formLogin.get('password')?.value,
     };
-
-    console.log(loginPayload);
-    return;
 
     this.authService.login(loginPayload).subscribe({
       next: (response) => {
         console.log(response);
-        this.router.navigate(['/admin']);
+        if (response.statusCode !== 200) {
+          toast.warning('Error al iniciar sesión', {
+            description: response.message
+          });
+          return;
+        }
+        toast.success('Inicio de sesión exitoso');
+        localStorage.setItem('authToken', response.token);
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        toast.error('Error al iniciar sesión', {
+          description: error
+        });
       }
     });
 
